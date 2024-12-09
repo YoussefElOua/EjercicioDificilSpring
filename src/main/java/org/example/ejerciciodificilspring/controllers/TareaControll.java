@@ -1,10 +1,11 @@
 package org.example.ejerciciodificilspring.controllers;
 
-import ch.qos.logback.core.model.Model;
+
 import org.example.ejerciciodificilspring.entities.Tarea;
 import org.example.ejerciciodificilspring.services.TareaService;
 import org.example.ejerciciodificilspring.services.TrabajadorService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,8 +33,8 @@ public class TareaControll {
         Tarea tarea = new Tarea();
         model.addAttribute("tarea", tarea);
         model.addAttribute("trabajadores", trabajadorService.findAll());
-        model.addAttribute("tipos", Tarea.Type.values());
-        model.addAttribute("estados", Tarea.Status.values());
+        model.addAttribute("tipos", tarea.getType());
+        model.addAttribute("estados", tarea.getStatus());
         return "tarea/create";
     }
 
