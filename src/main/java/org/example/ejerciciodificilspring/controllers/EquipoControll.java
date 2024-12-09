@@ -4,36 +4,50 @@ import org.example.ejerciciodificilspring.entities.Equipo;
 import org.example.ejerciciodificilspring.services.EquipoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/equipos")
+@RequestMapping("/equipo")
 public class EquipoControll {
-    private final EquipoService equipoService ;
+    private final EquipoService equipoService;
 
-    public EquipoControll(EquipoService authorService) {
-        this.equipoService = authorService;
+    public EquipoControll(EquipoService equipoService) {
+        this.equipoService = equipoService;
     }
 
-
     @GetMapping
-    public String listEquipos(Model model) {
+    public String listaEquipos(Model model) {
         model.addAttribute("equipos", equipoService.findAll());
-        return "equipos/list";
+        return "equipo/list";
     }
 
     @GetMapping("/create")
-    public String createForm(Model model) {
+    public String createEquipo(Model model) {
         model.addAttribute("equipo", new Equipo());
-        return "equipos/form";
+        return "equipo/create";
     }
 
-    @PostMapping("/save")
-    public String save(@ModelAttribute Equipo equipo) {
+    @PostMapping("/create")
+    public String createEquipo(@ModelAttribute Equipo equipo) {
+        equipoService.save(equipo);
+        return "redirect:/equipo";
+    }
 
-        return "redirect:/equipos";
+    @GetMapping("/modificar/{id}")
+    public String modificarEquipo(@PathVariable long id, Model model) {
+        model.addAttribute("equipo", equipoService.findById(id));
+        return "equipo/update";
+    }
+
+    @PostMapping("/update")
+    public String updateEquipo(@ModelAttribute Equipo equipo) {
+        equipoService.update(equipo);
+        return "redirect:/equipo";
+    }
+
+    @GetMapping("/{id}")
+    public String equipoDetallado(@PathVariable long id, Model model){
+        model.addAttribute("equipo", equipoService.findById(id));
+        return "equipo/eD";
     }
 }
