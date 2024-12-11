@@ -38,12 +38,19 @@ public class Tarea {
     private LocalDate endDate;
 
     @Column(name="type", nullable = false)
-    private String type;
+    private Tipo tipo;
+    enum Tipo {
+        MEJORA,BUG,REFACTORIAZACION
+    }
 
 
 
     @Column(name="status", nullable = false)
     private String status;
+
+    enum Status {
+        ABIERTA,PROGRESO,CERRADA
+    }
 
 
 

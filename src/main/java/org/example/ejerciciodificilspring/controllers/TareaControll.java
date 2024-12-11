@@ -33,7 +33,7 @@ public class TareaControll {
         Tarea tarea = new Tarea();
         model.addAttribute("tarea", tarea);
         model.addAttribute("trabajadores", trabajadorService.findAll());
-        model.addAttribute("tipos", tarea.getType());
+        model.addAttribute("tipos", tarea.getTipo());
         model.addAttribute("estados", tarea.getStatus());
         return "tarea/create";
     }
@@ -47,16 +47,6 @@ public class TareaControll {
         return "redirect:/tarea";
     }
 
-    @GetMapping("/modificar/{id}")
-    public String modificarTarea(@PathVariable long id, Model model) {
-        Tarea tarea = tareaService.findById(id);
-        tarea.setTrabajadores(new HashSet<>());
-        model.addAttribute("tarea", tarea);
-        model.addAttribute("trabajadores", trabajadorService.findAll());
-        model.addAttribute("tipos", Tarea.Type.values());
-        model.addAttribute("estados", Tarea.Status.values());
-        return "tarea/update";
-    }
 
     @PostMapping("/modificar")
     public String modificarTarea(@ModelAttribute Tarea tarea, BindingResult result) {
